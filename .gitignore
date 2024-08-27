@@ -1,0 +1,9 @@
+# Ignore build output directories
+bin/
+obj/
+
+# Visual Studio/VSCode
+.vscode/
+.vs/
+.idea/
+
