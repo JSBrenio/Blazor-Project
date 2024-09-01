@@ -1,7 +1,26 @@
 ﻿@page "/"
+@using Sorting_Visualizer.Pages.CanvasComponent
+@using Sorting_Visualizer.Models
+@inject DataService DataService
 
 <PageTitle>Home</PageTitle>
 
-<h1>Hello, world!</h1>
+<CanvasComponent id="main-grid" Width="1200" Height="750" />
 
-Welcome to your new app.
+@code {
+    
+    public Data[] DataList { get; set; } = new Data[50];
+
+    protected override void OnInitialized()
+    {
+        for (int i = 0; i < 50; i++)
+        {
+            Data data = new Data(new Data.Point(i * 20, 700), i );
+            DataList[i] = data;
+        }
+
+        Data.ShuffleValues(DataList);
+
+        DataService.SetData(DataList);
+    }
+}
