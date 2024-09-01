@@ -1,0 +1,47 @@
+﻿@using Sorting_Visualizer.Models
+@inject DataService DataService
+@inject IJSRuntime JSRuntime
+@implements IDisposable
+
+<!-- GridComponent.razor -->
+<canvas id="@ID" Width="@Width" Height="@Height"></canvas>
+
+@code {    
+    [Parameter] public required string ID { get; set; }
+    [Parameter] public int Width { get; set; } = 1000;
+    [Parameter] public int Height { get; set; } = 1000;
+    public required Data[] DataList { get; set; }
+
+    protected override void OnInitialized()
+    {
+        DataService.OnChange += UpdateGrid;
+        this.DataList = DataService.DataList;
+        base.OnInitialized();
+    }
+    
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await DrawCanvas();
+        }
+    }
+
+    private async Task DrawCanvas()
+    {
+        var canvas = await JSRuntime.InvokeAsync<IJSObjectReference>("import", "./scripts/canvas.js");
+        var dataList = await canvas.InvokeAsync<object>("processData", DataService.GetDataListJson());
+        await canvas.InvokeVoidAsync("drawArray", dataList, ID);
+    }
+
+    private async void UpdateGrid()
+    {
+        await DrawCanvas();
+        StateHasChanged(); // Ensure the UI updates
+    }
+
+    public void Dispose()
+    {
+        DataService.OnChange -= UpdateGrid;
+    }
+}
