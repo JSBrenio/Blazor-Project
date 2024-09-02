@@ -1,0 +1,88 @@
+﻿@using Sorting_Visualizer.Models
+@using Sorting_Visualizer.Models.Algorithms
+@inject DataService DataService
+
+<div class="top-row ps-3 navbar navbar-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="">Sorting Visualizer</a>
+    </div>
+</div>
+
+<div class="nav-scrollable">
+    <nav class="flex-column">
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="Blazor-Project" Match="NavLinkMatch.All">
+                <span class="bi bi-house-door-fill-nav-menu" aria-hidden="true"></span> Home
+            </NavLink>
+        </div>
+        <div class="nav-item px-3">
+            <button class="nav-link" @onclick="randomize">
+                Randomize
+            </button>
+        </div>
+        <div class="nav-item px-3">
+            <button class="nav-link" @onclick="() => StartSort(1)" disabled="@inProgress">
+                Bubble Sort
+            </button>
+            <p>@statusMessage</p>
+        </div>
+        <div class="nav-item px-3">
+            <button class="nav-link" @onclick="CancelOperation" disabled="@(inProgress == false)">
+                Cancel Sorting
+            </button>
+        </div>
+    </nav>
+</div>
+
+@code {
+
+    private bool inProgress = false;
+    private string statusMessage = "";
+
+    private CancellationTokenSource? cancellation;
+    
+    private void randomize() 
+    {
+        Data.ShuffleValues(DataService.DataList);
+        DataService.SetData(DataService.DataList);
+    }
+
+    private async void StartSort(int selection) 
+    {
+        Console.WriteLine("STARTING SORT");
+        inProgress = true;
+        statusMessage = "Sorting";
+        cancellation = new();
+
+        switch (selection)
+        {
+            case 1: 
+                try
+                {
+                    await Task.Run(() => new Sort(DataService, cancellation.Token).BubbleSort(DataService.DataList));
+                    await Task.Yield();
+                    statusMessage = "Sorted";
+                }
+                catch (OperationCanceledException)
+                {
+                    statusMessage = "Cancelled Sorting.";
+                    StateHasChanged();
+                }
+                catch (Exception ex)
+                {
+                    statusMessage = $"Failed: {ex.Message}";
+                }
+                break;
+
+            default: 
+                break;
+        }
+        inProgress = false;
+        StateHasChanged();
+    }
+
+    private void CancelOperation()
+    {
+        cancellation?.Cancel(); // Request cancellation
+    }
+}
