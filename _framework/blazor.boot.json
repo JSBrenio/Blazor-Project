@@ -1,7 +1,7 @@
 {
   "mainAssemblyName": "Sorting Visualizer",
   "resources": {
-    "hash": "sha256-9kI8THGe1AcMwZIoVsh0XiENk6sqJW5aP60UsM7uh1U=",
+    "hash": "sha256-JqVKgkBp9GToGcFQs9tt3XMVTlMZQRLu+X3QQBZ06GE=",
     "jsModuleNative": {
       "dotnet.native.8.0.5.z32y84jy8s.js": "sha256-boyHe+0RMZDkzBKGhsrnXPhPg3oZ6UqJnTUzngJPjNY="
     },
@@ -31,7 +31,7 @@
       "Microsoft.Extensions.Primitives.wasm": "sha256-6187ynEahDlSLMBvD4vAmiLpZ3clRb5xu6rM7O8AxNo=",
       "Microsoft.JSInterop.wasm": "sha256-nU2yNYDqXmjt1J/SWanW+TyLfiTcebPzJCcjIsrUy0k=",
       "Microsoft.JSInterop.WebAssembly.wasm": "sha256-ZyIqQss3I64BQC2gc7JEDrkYq14vXKEXuw5vBJ5oFYM=",
-      "Sorting Visualizer.wasm": "sha256-87qHb+xX11S7CaU6EZz9JG9i+JMYZ1lp/a8goPcdmag=",
+      "Sorting Visualizer.wasm": "sha256-/Uc4QmzUjxzYjkhqxnr05cOVRhbAEUWG1x01389CwI4=",
       "System.Collections.Concurrent.wasm": "sha256-hcJzzCFysdsZwkKtaDyF6EsGEfMnqT9u7dGZXk0jTMc=",
       "System.Collections.wasm": "sha256-8yc3WEJWGV939xaDobGchmXAf3wPz4P7MEM+L4fyFZU=",
       "System.ComponentModel.wasm": "sha256-RLeTQOOEEy4QXGeQLyLNY8k+aaF4W/EDE4Gx/TW+zxY=",
